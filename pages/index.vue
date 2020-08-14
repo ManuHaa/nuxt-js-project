@@ -1,34 +1,36 @@
 <template>
-  <div class="container">
-    <div>
-      <Logo />
-      <h1 class="title">
-        nuxtjs-flask-app
-      </h1>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
-      </div>
-    </div>
+  <div>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-export default {}
+import axios from 'axios';
+
+export default {
+  name: 'Ping',
+  data() {
+    return {
+      msg: '',
+    };
+  },
+  methods: {
+    getMessage() {
+      const path = 'http://localhost:5000';
+      axios.get(path)
+        .then((res) => {
+          this.msg = res.data;
+        })
+        .catch((error) => {
+          // eslint-disable-next-line
+          console.error(error);
+        });
+    },
+  },
+  created() {
+    this.getMessage();
+  },
+};
 </script>
 
 <style>
